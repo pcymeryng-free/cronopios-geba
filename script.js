@@ -1,110 +1,30 @@
-const caballeros = [
-  "Bruno Nicolotti",
-  "Matias Gallego",
-  "Santi Brusco",
-  "Coqui",
-  "Marco Trombetta",
-  "Santino",
-  "Diego Putallaz",
-  "Martin Zuccardi",
-  "Gustavo Brusco",
-  "Pablo Cymeryng"
-];
-
-const damas = [
-  "Yami",
-  "Yani",
-  "Analia",
-  "Sandra Forcher",
-  "Gaby",
-  "Dolores",
-  "Mayra",
-  "Florencia Riom"
-];
-
-const todos = [...caballeros, ...damas];
-
-const jugadorSelect = document.getElementById("jugador");
-const mismoGeneroDiv = document.getElementById("mismoGenero");
-
-function generarOpciones(lista, jugadorActual) {
-
-  return lista
-    .filter(nombre => nombre !== jugadorActual)
-    .map(nombre => `<option value="${nombre}">${nombre}</option>`)
-    .join("");
-
-}
-
-jugadorSelect.addEventListener("change", () => {
-
-  const jugador = jugadorSelect.value;
-
-  const esCaballero = caballeros.includes(jugador);
-
-  const listaMismoGenero = esCaballero ? caballeros : damas;
-
-  mismoGeneroDiv.innerHTML = `
-    <label>
-      3- ${
-        esCaballero
-          ? "Dos compañeros con quienes mejor te sentís jugando DC"
-          : "Dos compañeras con quienes mejor te sentís jugando DD"
-      }
-    </label>
-
-    <select id="comp1" required>
-      <option value="">Seleccionar</option>
-      ${generarOpciones(listaMismoGenero, jugador)}
-    </select>
-
-    <select id="comp2" required>
-      <option value="">Seleccionar</option>
-      ${generarOpciones(listaMismoGenero, jugador)}
-    </select>
-  `;
-
-  document.getElementById("dmSection").innerHTML = `
-    <label>
-      5- Dos compañeros/as con quienes mejor te sentís jugando DM
-    </label>
-
-    <select id="dm1" required>
-      <option value="">Seleccionar</option>
-      ${generarOpciones(todos, jugador)}
-    </select>
-
-    <select id="dm2" required>
-      <option value="">Seleccionar</option>
-      ${generarOpciones(todos, jugador)}
-    </select>
-  `;
-
-});
-
 document
   .getElementById("cronopiosForm")
-  .addEventListener("submit", function(e){
+  .addEventListener("submit", async function(e){
 
   e.preventDefault();
 
-  const params = {
+  const data = {
     jugador: document.getElementById("jugador").value,
     lado: document.getElementById("lado").value,
     estilo: document.getElementById("estilo").value,
     comp1: document.getElementById("comp1").value,
     comp2: document.getElementById("comp2").value,
     dm1: document.getElementById("dm1").value,
-    dm2: document.getElementById("dm2").value,
-    destino: "pcymeryng@gmail.com"
+    dm2: document.getElementById("dm2").value
   };
 
-  emailjs.send(
-    "service_jyx6cwa",
-    "template_545y4zc",
-    params
-  )
-  .then(() => {
+  try {
+
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbzW5sULAvAKy3IfdjyUdpfG4TN8SK4ZF_3y8-IKuBHZ1o-hKXVGzebJtduiDLde16P4/exec",
+      {
+        method: "POST",
+        body: JSON.stringify(data)
+      }
+    );
+
+    const result = await response.json();
 
     document.getElementById("mensaje").innerHTML =
       "✅ Respuestas enviadas correctamente";
@@ -114,14 +34,13 @@ document
     mismoGeneroDiv.innerHTML = "";
     document.getElementById("dmSection").innerHTML = "";
 
-  })
-  .catch((error) => {
+  } catch(error) {
 
     console.log(error);
 
     document.getElementById("mensaje").innerHTML =
       "❌ Error enviando respuestas";
 
-  });
+  }
 
 });
