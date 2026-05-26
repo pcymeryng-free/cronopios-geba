@@ -22,31 +22,64 @@ const damas = [
   "Florencia Riom"
 ];
 
+const todos = [...caballeros, ...damas];
+
 const jugadorSelect = document.getElementById("jugador");
 const mismoGeneroDiv = document.getElementById("mismoGenero");
+
+function generarOpciones(lista, jugadorActual) {
+
+  return lista
+    .filter(nombre => nombre !== jugadorActual)
+    .map(nombre => `<option value="${nombre}">${nombre}</option>`)
+    .join("");
+
+}
 
 jugadorSelect.addEventListener("change", () => {
 
   const jugador = jugadorSelect.value;
 
-  if (caballeros.includes(jugador)) {
+  const esCaballero = caballeros.includes(jugador);
 
-    mismoGeneroDiv.innerHTML = `
-      <label>3- Dos compañeros con quienes mejor te sentís jugando DC</label>
+  const listaMismoGenero = esCaballero ? caballeros : damas;
 
-      <input type="text" id="comp1" required placeholder="Compañero 1"/>
-      <input type="text" id="comp2" required placeholder="Compañero 2"/>
-    `;
+  mismoGeneroDiv.innerHTML = `
+    <label>
+      3- ${
+        esCaballero
+          ? "Dos compañeros con quienes mejor te sentís jugando DC"
+          : "Dos compañeras con quienes mejor te sentís jugando DD"
+      }
+    </label>
 
-  } else {
+    <select id="comp1" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(listaMismoGenero, jugador)}
+    </select>
 
-    mismoGeneroDiv.innerHTML = `
-      <label>3- Dos compañeras con quienes mejor te sentís jugando DD</label>
+    <select id="comp2" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(listaMismoGenero, jugador)}
+    </select>
+  `;
 
-      <input type="text" id="comp1" required placeholder="Compañera 1"/>
-      <input type="text" id="comp2" required placeholder="Compañera 2"/>
-    `;
-  }
+  document.getElementById("dmSection").innerHTML = `
+    <label>
+      5- Dos compañeros/as con quienes mejor te sentís jugando DM
+    </label>
+
+    <select id="dm1" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(todos, jugador)}
+    </select>
+
+    <select id="dm2" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(todos, jugador)}
+    </select>
+  `;
+
 });
 
 document
@@ -68,7 +101,7 @@ document
 
   emailjs.send(
     "service_jyx6cwa",
-    "template_j8pvgze",
+    "template_545y4zc",
     params
   )
   .then(() => {
@@ -77,6 +110,9 @@ document
       "✅ Respuestas enviadas correctamente";
 
     document.getElementById("cronopiosForm").reset();
+
+    mismoGeneroDiv.innerHTML = "";
+    document.getElementById("dmSection").innerHTML = "";
 
   })
   .catch((error) => {
