@@ -65,22 +65,23 @@ jugadorSelect.addEventListener("change", () => {
     </select>
   `;
 
-  dmSection.innerHTML = `
-    <label>
-      5- Dos compañeros/as con quienes mejor te sentís jugando DM
-    </label>
+  const listaDM = esCaballero ? damas : caballeros;
 
-    <select id="dm1" required>
-      <option value="">Seleccionar</option>
-      ${generarOpciones(todos, jugador)}
-    </select>
+dmSection.innerHTML = `
+  <label>
+    5- Dos compañeros/as con quienes mejor te sentís jugando DM
+  </label>
 
-    <select id="dm2" required>
-      <option value="">Seleccionar</option>
-      ${generarOpciones(todos, jugador)}
-    </select>
-  `;
+  <select id="dm1" required>
+    <option value="">Seleccionar</option>
+    ${generarOpciones(listaDM, jugador)}
+  </select>
 
+  <select id="dm2" required>
+    <option value="">Seleccionar</option>
+    ${generarOpciones(listaDM, jugador)}
+  </select>
+`;
 });
 
 document
