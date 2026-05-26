@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cronopios GEBA 2026</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronopios GEBA</title>
 
-  <link rel="stylesheet" href="style.css"/>
-
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <script>
-    (function(){
-      emailjs.init("ibp2qAEgsTjPonol3");
-    })();
-  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -23,7 +16,7 @@
     <h1>🎾 Cronopios GEBA 2026</h1>
 
     <p class="subtitle">
-      Completá el formulario para ayudarnos a armar las mejores parejas del torneo.
+      Completá el formulario
     </p>
 
     <form id="cronopiosForm">
@@ -31,30 +24,31 @@
       <label>Nombre</label>
 
       <select id="jugador" required>
+
         <option value="">Seleccionar</option>
 
         <optgroup label="Caballeros">
-          <option value="Bruno Nicolotti">Bruno Nicolotti</option>
-          <option value="Matias Gallego">Matias Gallego</option>
-          <option value="Santi Brusco">Santi Brusco</option>
-          <option value="Coqui">Coqui</option>
-          <option value="Marco Trombetta">Marco Trombetta</option>
-          <option value="Santino">Santino</option>
-          <option value="Diego Putallaz">Diego Putallaz</option>
-          <option value="Martin Zuccardi">Martin Zuccardi</option>
-          <option value="Gustavo Brusco">Gustavo Brusco</option>
-          <option value="Pablo Cymeryng">Pablo Cymeryng</option>
+          <option>Bruno Nicolotti</option>
+          <option>Matias Gallego</option>
+          <option>Santi Brusco</option>
+          <option>Coqui</option>
+          <option>Marco Trombetta</option>
+          <option>Santino</option>
+          <option>Diego Putallaz</option>
+          <option>Martin Zuccardi</option>
+          <option>Gustavo Brusco</option>
+          <option>Pablo Cymeryng</option>
         </optgroup>
 
         <optgroup label="Damas">
-          <option value="Yami">Yami</option>
-          <option value="Yani">Yani</option>
-          <option value="Analia">Analia</option>
-          <option value="Sandra Forcher">Sandra Forcher</option>
-          <option value="Gaby">Gaby</option>
-          <option value="Dolores">Dolores</option>
-          <option value="Mayra">Mayra</option>
-          <option value="Florencia Riom">Florencia Riom</option>
+          <option>Yami</option>
+          <option>Yani</option>
+          <option>Analia</option>
+          <option>Sandra Forcher</option>
+          <option>Gaby</option>
+          <option>Dolores</option>
+          <option>Mayra</option>
+          <option>Florencia Riom</option>
         </optgroup>
 
       </select>
@@ -79,7 +73,10 @@
 
       <div id="dmSection"></div>
 
-      <button type="submit">Enviar respuestas</button>
+      <button type="submit">
+        Enviar respuestas
+      </button>
+
     </form>
 
     <div id="mensaje"></div>
