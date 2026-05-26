@@ -1,3 +1,88 @@
+const caballeros = [
+  "Bruno Nicolotti",
+  "Matias Gallego",
+  "Santi Brusco",
+  "Coqui",
+  "Marco Trombetta",
+  "Santino",
+  "Diego Putallaz",
+  "Martin Zuccardi",
+  "Gustavo Brusco",
+  "Pablo Cymeryng"
+];
+
+const damas = [
+  "Yami",
+  "Yani",
+  "Analia",
+  "Sandra Forcher",
+  "Gaby",
+  "Dolores",
+  "Mayra",
+  "Florencia Riom"
+];
+
+const todos = [...caballeros, ...damas];
+
+const jugadorSelect = document.getElementById("jugador");
+const mismoGeneroDiv = document.getElementById("mismoGenero");
+const dmSection = document.getElementById("dmSection");
+
+function generarOpciones(lista, actual) {
+
+  return lista
+    .filter(j => j !== actual)
+    .map(j => `<option value="${j}">${j}</option>`)
+    .join("");
+
+}
+
+jugadorSelect.addEventListener("change", () => {
+
+  const jugador = jugadorSelect.value;
+
+  const esCaballero = caballeros.includes(jugador);
+
+  const listaGenero = esCaballero ? caballeros : damas;
+
+  mismoGeneroDiv.innerHTML = `
+    <label>
+      ${
+        esCaballero
+          ? "3- Dos compañeros con quienes mejor te sentís jugando DC"
+          : "3- Dos compañeras con quienes mejor te sentís jugando DD"
+      }
+    </label>
+
+    <select id="comp1" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(listaGenero, jugador)}
+    </select>
+
+    <select id="comp2" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(listaGenero, jugador)}
+    </select>
+  `;
+
+  dmSection.innerHTML = `
+    <label>
+      5- Dos compañeros/as con quienes mejor te sentís jugando DM
+    </label>
+
+    <select id="dm1" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(todos, jugador)}
+    </select>
+
+    <select id="dm2" required>
+      <option value="">Seleccionar</option>
+      ${generarOpciones(todos, jugador)}
+    </select>
+  `;
+
+});
+
 document
   .getElementById("cronopiosForm")
   .addEventListener("submit", async function(e){
@@ -16,7 +101,7 @@ document
 
   try {
 
-    const response = await fetch(
+    await fetch(
       "https://script.google.com/macros/s/AKfycbzW5sULAvAKy3IfdjyUdpfG4TN8SK4ZF_3y8-IKuBHZ1o-hKXVGzebJtduiDLde16P4/exec",
       {
         method: "POST",
@@ -24,15 +109,13 @@ document
       }
     );
 
-    const result = await response.json();
-
     document.getElementById("mensaje").innerHTML =
       "✅ Respuestas enviadas correctamente";
 
     document.getElementById("cronopiosForm").reset();
 
     mismoGeneroDiv.innerHTML = "";
-    document.getElementById("dmSection").innerHTML = "";
+    dmSection.innerHTML = "";
 
   } catch(error) {
 
